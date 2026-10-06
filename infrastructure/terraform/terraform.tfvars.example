@@ -1,0 +1,17 @@
+aws_region  = "eu-west-2"
+environment = "dev"
+
+vpc_cidr = "10.42.0.0/16"
+
+container_port    = 8000
+health_check_path = "/health"
+
+log_retention_days = 14
+
+ecr_force_delete        = false
+alb_deletion_protection = false
+
+extra_tags = {
+  Portfolio = "true"
+  Owner     = "tosinmulero"
+}

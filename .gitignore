@@ -185,3 +185,10 @@ reports/ml/champion_validation.json
 reports/ml/model_card.md
 reports/ml/model_load_diagnostic.json
 reports/ml/retraining_decision.json
+
+# Terraform runtime
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
