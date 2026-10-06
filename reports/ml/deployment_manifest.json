@@ -1,0 +1,39 @@
+{
+  "status": "approved",
+  "registered_model_name": "railflow_station_interchange_regressor",
+  "registered_model_version": "1",
+  "registry_alias": "champion",
+  "training_run_id": "062a3a3191f44649877428d5020f803d",
+  "model_name": "random_forest",
+  "source_mlflow_model_uri": "models:/m-9b78f6495ae74bb2be3f679a98a4d1bb",
+  "artifact_format": "skops",
+  "artifact_path": "models/deployment/railflow_station_interchange_regressor_v1.skops",
+  "artifact_sha256": "5d60f1755f2e9153aa14c65603e1bcb0329935e4966073468a808173fd46e9cf",
+  "dataset_sha256": "252bbdf062f5b648e863bcb6239a9b54f44927960ba56ec47b5bd8b12443cde2",
+  "feature_columns": [
+    "c1",
+    "c2",
+    "c3",
+    "c4",
+    "c8"
+  ],
+  "target_column": "c6",
+  "trusted_types": [
+    "numpy.dtype",
+    "sklearn.tree._tree.Tree"
+  ],
+  "validation": {
+    "rmsle": 3.209536695617612,
+    "mae": 94668.74162411087,
+    "rmse": 636109.0494138201,
+    "r2": 0.27474814173061857,
+    "prediction_equivalence": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "scikit_learn": "1.9.1",
+    "skops": "0.16.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.3"
+  }
+}

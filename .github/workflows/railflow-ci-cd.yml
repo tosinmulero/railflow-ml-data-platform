@@ -1,0 +1,355 @@
+name: RailFlow CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: railflow-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+
+  quality:
+    name: Quality, Tests & Model Integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            requirements*.txt
+
+      - name: Install project dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python -m pip install --upgrade pip
+
+          for req in \
+            requirements.txt \
+            requirements-ml.txt \
+            requirements-api.txt \
+            requirements-serving.txt
+          do
+            if [ -f "$req" ]; then
+              echo "Installing $req"
+              python -m pip install -r "$req"
+            fi
+          done
+
+          python -m pip install \
+            pytest==9.1.1 \
+            ruff
+
+          python -m pip check
+
+      - name: Compile Python sources
+        run: |
+          python -m compileall \
+            api \
+            ml \
+            scripts \
+            airflow/dags
+
+      - name: Ruff
+        run: |
+          python -m ruff check \
+            api \
+            airflow \
+            ml \
+            scripts \
+            tests
+
+      - name: Unit and regression tests
+        run: |
+          python -m pytest \
+            tests \
+            -q
+
+      - name: Validate serving bundle
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m scripts.ci_validate_serving_bundle
+
+
+  docker-smoke:
+    name: Docker Build & Inference Smoke Test
+    needs:
+      - quality
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build RailFlow API image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/api/Dockerfile
+          load: true
+          push: false
+          tags: railflow-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run API container
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          docker run \
+            --detach \
+            --name railflow-api-ci \
+            --publish 8000:8000 \
+            railflow-api:ci
+
+      - name: Wait for healthy API
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for attempt in $(seq 1 30); do
+
+            if curl \
+              --fail \
+              --silent \
+              --show-error \
+              http://127.0.0.1:8000/health \
+              > /tmp/health.json
+            then
+              cat /tmp/health.json
+              exit 0
+            fi
+
+            echo \
+              "Waiting for RailFlow API..." \
+              "$attempt/30"
+
+            sleep 2
+          done
+
+          echo "API failed to become healthy."
+          docker logs railflow-api-ci
+          exit 1
+
+      - name: Validate health response
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("/tmp/health.json").read_text()
+          )
+
+          assert data["status"] == "ok"
+          assert data["model_loaded"] is True
+          assert data["model_alias"] == "champion"
+
+          print("HEALTH ENDPOINT: PASS")
+          PY
+
+      - name: Validate model endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            http://127.0.0.1:8000/model \
+            > /tmp/model.json
+
+          cat /tmp/model.json
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("/tmp/model.json").read_text()
+          )
+
+          assert data["alias"] == "champion"
+          assert data["validation_status"] == "approved"
+          assert data["version"]
+
+          print("MODEL ENDPOINT: PASS")
+          PY
+
+      - name: Real inference smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --data '{
+              "c1": 100000.0,
+              "c2": 150000.0,
+              "c3": 25000.0,
+              "c4": 275000.0,
+              "c8": 75000.0
+            }' \
+            http://127.0.0.1:8000/predict \
+            > /tmp/prediction.json
+
+          cat /tmp/prediction.json
+
+          python3 - <<'PY'
+          import json
+          import math
+          from pathlib import Path
+
+          data = json.loads(
+              Path(
+                  "/tmp/prediction.json"
+              ).read_text()
+          )
+
+          prediction = float(
+              data[
+                  "predicted_annual_interchanges"
+              ]
+          )
+
+          assert math.isfinite(prediction)
+          assert prediction >= 0
+          assert data["model_alias"] == "champion"
+          assert data["model_version"]
+
+          print("REAL INFERENCE: PASS")
+          PY
+
+      - name: Container health state
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          STATUS=$(
+            docker inspect \
+              --format \
+              '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' \
+              railflow-api-ci
+          )
+
+          echo "Container health: $STATUS"
+
+          test "$STATUS" = "healthy"
+
+      - name: Show API logs on failure
+        if: failure()
+        run: |
+          docker logs railflow-api-ci || true
+
+      - name: Remove CI container
+        if: always()
+        run: |
+          docker rm \
+            --force \
+            railflow-api-ci \
+            2>/dev/null || true
+
+
+  publish-image:
+    name: Publish Champion API Image
+    needs:
+      - quality
+      - docker-smoke
+
+    if: >-
+      github.event_name == 'push' &&
+      github.ref ==
+      format(
+        'refs/heads/{0}',
+        github.event.repository.default_branch
+      )
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: |
+            ghcr.io/${{ github.repository_owner }}/railflow-api
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.title=RailFlow ML Inference API
+            org.opencontainers.image.description=RailFlow champion station interchange inference service
+
+      - name: Build and publish image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/api/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
