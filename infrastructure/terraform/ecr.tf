@@ -43,7 +43,7 @@ resource "aws_ecr_lifecycle_policy" "railflow" {
         description  = "Keep the latest 20 tagged images"
 
         selection = {
-          tagStatus      = "tagged"
+          tagStatus = "tagged"
           tagPatternList = [
             "*"
           ]
