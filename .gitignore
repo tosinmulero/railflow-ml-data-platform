@@ -1,4 +1,4 @@
-﻿# ============================================================
+# ============================================================
 # Python
 # ============================================================
 __pycache__/
@@ -160,3 +160,28 @@ mlflow/artifacts/
 # OS/editor noise
 .DS_Store
 Thumbs.db
+
+# CI / repository structural placeholders
+!data/raw/
+!data/raw/.gitkeep
+!data/bronze/
+!data/bronze/.gitkeep
+!data/silver/
+!data/silver/.gitkeep
+!data/gold/
+!data/gold/.gitkeep
+!dbt/models/
+!dbt/models/.gitkeep
+
+# Generated local pipeline metadata
+data/metadata/
+
+# Generated ML validation reports
+reports/ml/airflow_preflight.json
+reports/ml/airflow_registry_validation.json
+reports/ml/airflow_serving_validation.json
+reports/ml/champion.json
+reports/ml/champion_validation.json
+reports/ml/model_card.md
+reports/ml/model_load_diagnostic.json
+reports/ml/retraining_decision.json

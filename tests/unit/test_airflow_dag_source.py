@@ -7,12 +7,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-DAG_FILE = (
-    PROJECT_ROOT
-    / "airflow"
-    / "dags"
-    / "railflow_end_to_end.py"
-)
+DAG_FILE = PROJECT_ROOT / "airflow" / "dags" / "railflow_end_to_end.py"
 
 
 def test_dag_file_exists() -> None:
@@ -24,9 +19,7 @@ def test_dag_file_exists() -> None:
 def test_dag_is_valid_python() -> None:
     """DAG must parse as valid Python."""
 
-    source = DAG_FILE.read_text(
-        encoding="utf-8"
-    )
+    source = DAG_FILE.read_text(encoding="utf-8")
 
     ast.parse(source)
 
@@ -34,22 +27,15 @@ def test_dag_is_valid_python() -> None:
 def test_dag_uses_airflow_sdk() -> None:
     """Airflow 3 public SDK should be used."""
 
-    source = DAG_FILE.read_text(
-        encoding="utf-8"
-    )
+    source = DAG_FILE.read_text(encoding="utf-8")
 
-    assert (
-        "from airflow.sdk import dag, task"
-        in source
-    )
+    assert "from airflow.sdk import dag, task" in source
 
 
 def test_dag_contains_required_tasks() -> None:
     """All major pipeline stages must be orchestrated."""
 
-    source = DAG_FILE.read_text(
-        encoding="utf-8"
-    )
+    source = DAG_FILE.read_text(encoding="utf-8")
 
     required_tasks = {
         "preflight",
@@ -62,11 +48,7 @@ def test_dag_contains_required_tasks() -> None:
         "validate_quality",
     }
 
-    missing = {
-        task
-        for task in required_tasks
-        if f"def {task}(" not in source
-    }
+    missing = {task for task in required_tasks if f"def {task}(" not in source}
 
     assert not missing
 
@@ -74,9 +56,7 @@ def test_dag_contains_required_tasks() -> None:
 def test_dag_has_operational_controls() -> None:
     """Schedule and concurrency controls should exist."""
 
-    source = DAG_FILE.read_text(
-        encoding="utf-8"
-    )
+    source = DAG_FILE.read_text(encoding="utf-8")
 
     assert 'schedule="@monthly"' in source
     assert "catchup=False" in source

@@ -30,14 +30,11 @@ def test_required_directories_exist() -> None:
     ]
 
     missing_directories = [
-        directory
-        for directory in required_directories
-        if not (PROJECT_ROOT / directory).exists()
+        directory for directory in required_directories if not (PROJECT_ROOT / directory).exists()
     ]
 
-    assert not missing_directories, (
-        "Required RailFlow directories are missing: "
-        + ", ".join(missing_directories)
+    assert not missing_directories, "Required RailFlow directories are missing: " + ", ".join(
+        missing_directories
     )
 
 
