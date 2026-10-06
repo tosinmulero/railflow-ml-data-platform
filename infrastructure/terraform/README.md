@@ -2,45 +2,78 @@
 
 Terraform infrastructure for the RailFlow ML Data Platform.
 
-## Stage 9A
+## Architecture
 
-The foundation defines:
+RailFlow uses:
 
-- AWS VPC
+- Amazon VPC
 - Two public subnets across separate Availability Zones
 - Internet Gateway
-- Public route table
 - Application Load Balancer
-- ALB target group with `/health` checks
-- ALB and ECS security groups
-- Amazon ECR repository
-- Amazon ECS cluster
-- Fargate and Fargate Spot capacity providers
+- ECS Fargate
+- Amazon ECR
 - CloudWatch Logs
-- ECS task execution IAM role
-- ECS application task IAM role
-- Standard RailFlow tagging
+- IAM least-privilege roles
+- GitHub Actions OIDC authentication
 
-## Deployment model
-
-Traffic flow:
+## Traffic flow
 
 Internet
 → Application Load Balancer
 → ECS security group
-→ ECS Fargate task
-→ RailFlow FastAPI container on port 8000
+→ ECS Fargate service
+→ RailFlow FastAPI container
+→ `/health`, `/model`, `/predict`
 
-Only the ALB security group is permitted to reach the application port.
+The ECS application port is not directly open to the internet.
 
-## Region
+Only the ALB security group can reach port 8000 on the ECS tasks.
 
-Default AWS region:
+## Container deployment
+
+Terraform creates the ECR repository, ECS cluster, task definition, service,
+load balancer, logging, IAM roles, and GitHub OIDC deployment role.
+
+The service begins with:
+
+`service_desired_count = 0`
+
+This prevents ECS from attempting to pull a bootstrap image before the first
+real RailFlow image has been pushed to ECR.
+
+The manual GitHub workflow:
+
+`.github/workflows/aws-ecs-deploy.yml`
+
+performs:
+
+1. GitHub OIDC authentication to AWS
+2. Docker build
+3. Push immutable `sha-<commit>` image to ECR
+4. Download the current ECS task definition
+5. Insert the new image URI
+6. Register the task definition revision
+7. Update the ECS service
+8. Scale the service to one task
+9. Wait for ECS service stability
+10. Verify running task count
+
+No long-lived AWS access keys are stored in GitHub.
+
+## AWS Region
+
+Default region:
 
 `eu-west-2`
 
-## Important
+## Deployment safety
 
-Stage 9A validates the infrastructure definition only.
+Terraform validation does not create AWS resources.
 
-Do not run `terraform apply` until Stage 9B deployment configuration and AWS authentication are ready.
+Actual AWS provisioning requires an explicit:
+
+`terraform apply`
+
+The AWS ECS deployment workflow is manual-only and cannot deploy until the
+Terraform infrastructure exists and the repository variable
+`AWS_DEPLOY_ROLE_ARN` has been configured.
