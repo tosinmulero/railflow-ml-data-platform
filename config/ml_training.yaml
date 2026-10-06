@@ -1,0 +1,75 @@
+project:
+  name: railflow_station_interchange_ml
+  release: "2024_25"
+  problem_type: regression
+  description: >
+    Estimate annual station interchange volume using passenger-flow
+    characteristics from the ORR station usage dataset.
+
+data:
+  parquet_dir: data/gold/orr/station_usage/ml_features/release=2024_25
+  id_column: station_key
+
+  target:
+    column: c6
+    semantic_name: annual_interchanges
+    transform: log1p
+
+  features:
+    - c1
+    - c2
+    - c3
+    - c4
+    - c8
+
+  excluded_leakage_columns:
+    - feature__c6
+    - feature__log1p__c6
+    - feature__percent_rank__c6
+    - feature__zscore__c6
+
+  excluded_identifier_columns:
+    - station_key
+    - c13
+
+  excluded_derived_columns:
+    - c5
+
+split:
+  test_size: 0.20
+  random_state: 42
+
+selection:
+  metric: rmsle
+  direction: minimize
+
+models:
+  baseline:
+    type: dummy_median
+
+  random_forest:
+    type: random_forest
+    n_estimators: 400
+    max_depth: 14
+    min_samples_leaf: 3
+    max_features: sqrt
+    n_jobs: -1
+
+  hist_gradient_boosting:
+    type: hist_gradient_boosting
+    learning_rate: 0.05
+    max_iter: 350
+    max_leaf_nodes: 31
+    l2_regularization: 1.0
+
+mlflow:
+  experiment_name: railflow-station-interchange-regression
+  tracking_db: mlflow/mlflow.db
+  artifact_root: mlflow/artifacts
+  registered_model_name: railflow_station_interchange_regressor
+  champion_alias: champion
+
+outputs:
+  comparison_csv: reports/ml/model_comparison.csv
+  champion_json: reports/ml/champion.json
+  model_card: reports/ml/model_card.md

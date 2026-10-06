@@ -1,0 +1,29 @@
+﻿# ================================================================
+# RailFlow ML Data Platform
+# Core Runtime Dependencies
+# ================================================================
+
+# Distributed data processing
+pyspark==4.2.0
+
+# Data engineering
+pandas>=2.2,<3.0
+numpy>=1.26,<3.0
+pyarrow>=18.0
+duckdb>=1.2,<2.0
+
+# Database connectivity
+SQLAlchemy>=2.0,<3.0
+psycopg[binary]>=3.2,<4.0
+
+# Machine learning
+scikit-learn>=1.6,<2.0
+xgboost>=3.0,<4.0
+
+# Configuration
+python-dotenv>=1.0,<2.0
+pydantic>=2.10,<3.0
+PyYAML>=6.0,<7.0
+
+# HTTP / API utilities
+requests>=2.32,<3.0

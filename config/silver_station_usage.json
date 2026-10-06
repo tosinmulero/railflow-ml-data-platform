@@ -1,0 +1,13 @@
+{
+  "dataset_id": "orr_station_usage_2024_25",
+  "release_period": "2024_25",
+  "financial_year_start": 2024,
+  "financial_year_end": 2025,
+  "bronze_path": "data/bronze/orr/station_usage/release=2024_25",
+  "silver_path": "data/silver/orr/station_usage/release=2024_25",
+  "quality_report": "data/metadata/orr/station_usage/silver_quality_report.json",
+  "schema_file": "data/metadata/orr/station_usage/silver_schema.json",
+  "data_contract": "data/metadata/orr/station_usage/silver_data_contract.json",
+  "data_dictionary": "docs/data_dictionary/orr_station_usage_silver.md",
+  "pipeline_version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+[project]
+name = "railflow-ml-data-platform"
+version = "0.1.0"
+description = "Production-grade rail data engineering and ML feature platform."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -1,0 +1,162 @@
+﻿# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# ============================================================
+# VS Code
+# ============================================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# ============================================================
+# Jupyter
+# ============================================================
+.ipynb_checkpoints/
+
+# ============================================================
+# Data
+# ============================================================
+data/raw/*
+data/bronze/*
+data/silver/*
+data/gold/*
+
+!data/raw/.gitkeep
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep
+
+*.csv
+*.parquet
+*.avro
+*.orc
+
+# ============================================================
+# Spark
+# ============================================================
+spark-warehouse/
+metastore_db/
+derby.log
+
+# ============================================================
+# Airflow
+# ============================================================
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/webserver_config.py
+
+# ============================================================
+# dbt
+# ============================================================
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+
+# ============================================================
+# MLflow / Models
+# ============================================================
+mlruns/
+models/
+artifacts/
+
+# ============================================================
+# Terraform
+# ============================================================
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+crash.log
+
+# ============================================================
+# Logs
+# ============================================================
+*.log
+logs/*
+!logs/.gitkeep
+
+# ============================================================
+# OS
+# ============================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# IDE / temporary
+# ============================================================
+*.tmp
+*.temp
+*.swp
+
+# DuckDB local development databases
+*.duckdb
+*.duckdb.wal
+mlflow/mlflow.db
+mlflow/mlflow.db-shm
+mlflow/mlflow.db-wal
+mlflow/artifacts/
+
+# RAILFLOW GENERATED/RUNTIME
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs / runtime
+logs/
+*.log
+
+# Large/generated data
+data/raw/
+data/bronze/
+data/silver/
+data/gold/
+*.parquet
+
+# DBT generated/runtime files
+dbt/target/
+dbt/logs/
+dbt/*.duckdb
+
+# MLflow runtime artifacts
+mlflow/artifacts/
+
+# Temporary backups
+*.stage7_backup
+*.stage8b_backup
+*.stage8c_backup
+*.bak
+*.tmp
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

@@ -1,0 +1,177 @@
+x-airflow-common:
+  &airflow-common
+
+  image: railflow-airflow:3.3.2
+
+
+  environment:
+    &airflow-common-env
+
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: >-
+      postgresql+psycopg2://airflow:airflow@postgres/airflow
+
+    AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"
+
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: >-
+      http://airflow-api-server:8080/execution/
+
+    AIRFLOW__API_AUTH__JWT_SECRET: >-
+      railflow-local-development-jwt-secret-2026
+
+    AIRFLOW__API__SECRET_KEY: >-
+      railflow-local-development-api-secret-2026
+
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+
+    RAILFLOW_PROJECT_ROOT: /opt/airflow/railflow
+    RAILFLOW_PYTHON: /opt/railflow-venv/bin/python
+    RAILFLOW_DBT: /opt/railflow-venv/bin/dbt
+
+    RAILFLOW_DUCKDB_PATH: >-
+      /opt/airflow/railflow/dbt/railflow_analytics.duckdb
+
+    PYSPARK_PYTHON: /opt/railflow-venv/bin/python
+    PYSPARK_DRIVER_PYTHON: /opt/railflow-venv/bin/python
+
+  volumes:
+    &airflow-common-volumes
+
+    - ./:/opt/airflow/railflow
+    - ./airflow/dags:/opt/airflow/dags
+    - railflow-airflow-logs:/opt/airflow/logs
+
+
+services:
+
+  postgres:
+    image: postgres:16
+
+    container_name: railflow-airflow-postgres
+
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+    volumes:
+      - railflow-airflow-postgres:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U airflow -d airflow
+
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    restart: unless-stopped
+
+
+  airflow-init:
+    <<: *airflow-common
+
+    build:
+      context: .
+      dockerfile: docker/airflow/Dockerfile
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    command:
+      - bash
+      - -c
+      - airflow db migrate
+
+
+  airflow-api-server:
+    <<: *airflow-common
+
+    container_name: railflow-airflow-api
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    command:
+      - api-server
+      - --port
+      - "8080"
+
+    ports:
+      - "8080:8080"
+
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - --fail
+        - http://localhost:8080/api/v2/monitor/health
+
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+    restart: unless-stopped
+
+
+  airflow-scheduler:
+    <<: *airflow-common
+
+    container_name: railflow-airflow-scheduler
+
+    # Local Windows/Docker Desktop development only.
+    # LocalExecutor runs Spark tasks in this container.
+    # Root is required to overwrite existing bind-mounted
+    # Parquet output directories created by Docker Spark.
+    user: "0:0"
+
+    # Local Docker Desktop development:
+    # root is required for Spark overwrite on Windows bind mounts.
+    # HOME/PYTHONPATH preserve access to the Airflow installation.
+    environment:
+      <<: *airflow-common-env
+      HOME: /home/airflow
+      PYTHONPATH: /home/airflow/.local/lib/python3.12/site-packages
+
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+      airflow-api-server:
+        condition: service_healthy
+
+    command:
+      - scheduler
+
+    restart: unless-stopped
+
+
+  airflow-dag-processor:
+    <<: *airflow-common
+
+    container_name: railflow-airflow-dag-processor
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+      airflow-api-server:
+        condition: service_healthy
+
+    command:
+      - dag-processor
+
+    restart: unless-stopped
+
+
+volumes:
+
+  railflow-airflow-postgres:
+
+  railflow-airflow-logs:

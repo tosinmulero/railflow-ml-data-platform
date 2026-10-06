@@ -1,0 +1,13 @@
+sources:
+  orr_station_usage:
+    dataset_id: "orr_station_usage_2024_25"
+    publisher: "Office of Rail and Road"
+    dataset_name: "Table 1410 - Passenger entries and exits and interchanges by station"
+    release_period: "2024_25"
+    source_page: "https://dataportal.orr.gov.uk/station-usage"
+    download_url: "https://dataportal.orr.gov.uk/media/1909/table-1410-passenger-entries-and-exits-and-interchanges-by-station.csv"
+    raw_file: "data/raw/orr/station_usage/station_usage_2024_25.csv"
+    manifest_file: "data/metadata/orr/station_usage/raw_manifest.json"
+    bronze_path: "data/bronze/orr/station_usage/release=2024_25"
+    quality_report: "data/metadata/orr/station_usage/bronze_quality_report.json"
+    schema_file: "data/metadata/orr/station_usage/bronze_schema.json"
