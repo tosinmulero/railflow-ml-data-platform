@@ -28,3 +28,5 @@ extra_tags = {
   Portfolio = "true"
   Owner     = "tosinmulero"
 }
+# Immutable GitHub OIDC identity for repositories created after 15 July 2026.
+github_oidc_subject = "repo:tosinmulero@53153299/railflow-ml-data-platform@1407973668:ref:refs/heads/main"

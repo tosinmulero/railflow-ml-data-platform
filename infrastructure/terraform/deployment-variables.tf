@@ -47,3 +47,8 @@ variable "github_repository" {
   type        = string
   default     = "tosinmulero/railflow-ml-data-platform"
 }
+variable "github_oidc_subject" {
+  description = "Exact immutable GitHub Actions OIDC subject allowed to assume the AWS deployment role."
+  type        = string
+  default     = "repo:tosinmulero@53153299/railflow-ml-data-platform@1407973668:ref:refs/heads/main"
+}
