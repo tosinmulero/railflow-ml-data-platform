@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#06111f"/><stop offset="0.5" stop-color="#0b1730"/><stop offset="1" stop-color="#25104a"/>
+  </linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#22d3ee"/><stop offset="0.32" stop-color="#3b82f6"/><stop offset="0.65" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f59e0b"/>
+  </linearGradient>
+  <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-opacity=".28"/></filter>
+</defs>
+<rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+<circle cx="1450" cy="90" r="260" fill="#22d3ee" opacity=".07"/>
+<circle cx="120" cy="820" r="280" fill="#8b5cf6" opacity=".09"/>
+<text x="80" y="88" fill="#67e8f9" font-family="Segoe UI,Arial" font-size="24" font-weight="800" letter-spacing="2">RAILFLOW ML DATA PLATFORM</text>
+<text x="80" y="142" fill="#fff" font-family="Segoe UI,Arial" font-size="46" font-weight="800">Production-style data, ML & cloud architecture</text>
+<rect x="80" y="168" width="1440" height="5" rx="3" fill="url(#accent)"/>
+
+<g font-family="Segoe UI,Arial" text-anchor="middle" filter="url(#shadow)">
+  <g transform="translate(80,240)">
+    <rect width="180" height="110" rx="20" fill="#0f2940" stroke="#22d3ee" stroke-opacity=".5"/>
+    <text x="90" y="45" fill="#67e8f9" font-size="18" font-weight="800">ORR SOURCE</text>
+    <text x="90" y="76" fill="#cbd5e1" font-size="15">Station usage 2024-25</text>
+  </g>
+  <g transform="translate(290,240)"><rect width="150" height="110" rx="20" fill="#10283e" stroke="#38bdf8" stroke-opacity=".45"/><text x="75" y="62" fill="#fff" font-size="22" font-weight="800">RAW</text></g>
+  <g transform="translate(470,240)"><rect width="150" height="110" rx="20" fill="#122846" stroke="#3b82f6" stroke-opacity=".55"/><text x="75" y="62" fill="#fff" font-size="22" font-weight="800">BRONZE</text></g>
+  <g transform="translate(650,240)"><rect width="150" height="110" rx="20" fill="#172452" stroke="#6366f1" stroke-opacity=".55"/><text x="75" y="62" fill="#fff" font-size="22" font-weight="800">SILVER</text></g>
+  <g transform="translate(830,240)"><rect width="150" height="110" rx="20" fill="#211d52" stroke="#8b5cf6" stroke-opacity=".55"/><text x="75" y="62" fill="#fff" font-size="22" font-weight="800">GOLD</text></g>
+  <g transform="translate(1010,240)"><rect width="210" height="110" rx="20" fill="#271b49" stroke="#a855f7" stroke-opacity=".55"/><text x="105" y="48" fill="#fff" font-size="20" font-weight="800">dbt ANALYTICS</text><text x="105" y="78" fill="#d8b4fe" font-size="15">7 models • 29 PASS</text></g>
+  <g transform="translate(1250,240)"><rect width="270" height="110" rx="20" fill="#2c1838" stroke="#ec4899" stroke-opacity=".48"/><text x="135" y="48" fill="#fff" font-size="20" font-weight="800">ML FEATURE STORE</text><text x="135" y="78" fill="#fbcfe8" font-size="15">Validated model inputs</text></g>
+</g>
+
+<g fill="none" stroke="url(#accent)" stroke-width="4" opacity=".85">
+  <path d="M260 295H290"/><path d="M440 295H470"/><path d="M620 295H650"/><path d="M800 295H830"/><path d="M980 295H1010"/><path d="M1220 295H1250"/>
+</g>
+
+<g font-family="Segoe UI,Arial" text-anchor="middle" filter="url(#shadow)">
+  <g transform="translate(190,470)"><rect width="220" height="120" rx="20" fill="#102039" stroke="#22d3ee" stroke-opacity=".45"/><text x="110" y="48" fill="#fff" font-size="20" font-weight="800">MODEL TRAINING</text><text x="110" y="80" fill="#a5f3fc" font-size="15">RF • HistGB • baseline</text></g>
+  <g transform="translate(450,470)"><rect width="200" height="120" rx="20" fill="#172043" stroke="#3b82f6" stroke-opacity=".5"/><text x="100" y="50" fill="#fff" font-size="21" font-weight="800">MLflow</text><text x="100" y="82" fill="#bfdbfe" font-size="15">registry + governance</text></g>
+  <g transform="translate(690,470)"><rect width="220" height="120" rx="20" fill="#211d4b" stroke="#8b5cf6" stroke-opacity=".55"/><text x="110" y="48" fill="#fff" font-size="20" font-weight="800">CHAMPION MODEL</text><text x="110" y="80" fill="#ddd6fe" font-size="15">validated skops artifact</text></g>
+  <g transform="translate(950,470)"><rect width="180" height="120" rx="20" fill="#102d31" stroke="#10b981" stroke-opacity=".5"/><text x="90" y="50" fill="#fff" font-size="21" font-weight="800">FastAPI</text><text x="90" y="82" fill="#a7f3d0" font-size="15">Pydantic serving</text></g>
+  <g transform="translate(1170,470)"><rect width="160" height="120" rx="20" fill="#183047" stroke="#38bdf8" stroke-opacity=".5"/><text x="80" y="62" fill="#fff" font-size="21" font-weight="800">Docker</text></g>
+  <g transform="translate(1370,470)"><rect width="150" height="120" rx="20" fill="#402713" stroke="#f59e0b" stroke-opacity=".55"/><text x="75" y="48" fill="#fff" font-size="19" font-weight="800">AWS</text><text x="75" y="78" fill="#fde68a" font-size="14">ECR • ECS</text></g>
+</g>
+<g fill="none" stroke="url(#accent)" stroke-width="4" opacity=".85">
+  <path d="M410 530H450"/><path d="M650 530H690"/><path d="M910 530H950"/><path d="M1130 530H1170"/><path d="M1330 530H1370"/>
+</g>
+<path d="M1385 590V660H1045" fill="none" stroke="#f59e0b" stroke-width="4" opacity=".75"/>
+<g font-family="Segoe UI,Arial" filter="url(#shadow)">
+  <rect x="840" y="650" width="410" height="130" rx="22" fill="#281b13" stroke="#f59e0b" stroke-opacity=".5"/>
+  <text x="1045" y="700" text-anchor="middle" fill="#fff" font-size="23" font-weight="800">ECS / Fargate + ALB</text>
+  <text x="1045" y="738" text-anchor="middle" fill="#fde68a" font-size="16">Live API verification: /health • /model • /predict</text>
+
+  <rect x="80" y="650" width="310" height="130" rx="22" fill="#0e2a35" stroke="#22d3ee" stroke-opacity=".45"/>
+  <text x="235" y="696" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">Apache Airflow</text>
+  <text x="235" y="734" text-anchor="middle" fill="#a5f3fc" font-size="16">data + ML lifecycle orchestration</text>
+
+  <rect x="430" y="650" width="350" height="130" rx="22" fill="#1e1b42" stroke="#8b5cf6" stroke-opacity=".45"/>
+  <text x="605" y="696" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">GitHub Actions + Terraform</text>
+  <text x="605" y="734" text-anchor="middle" fill="#ddd6fe" font-size="16">OIDC • CI/CD • 25 AWS resources</text>
+</g>
+<text x="80" y="842" fill="#94a3b8" font-family="Segoe UI,Arial" font-size="17">Reproducible engineering • data quality • model governance • secure cloud delivery</text>
+</svg>
