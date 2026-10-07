@@ -7,6 +7,16 @@
 
 The project is designed as a production-style portfolio system, with emphasis on reproducibility, data quality, model governance, secure deployment and operational controls rather than model accuracy alone.
 
+## Recruiter visual pack
+
+<p align="center">
+  <img src="docs/screenshots/01_platform_architecture.svg" alt="RailFlow Platform Architecture" width="100%">
+</p>
+
+| Verified Delivery Evidence | Model Evidence |
+| --- | --- |
+| ![RailFlow delivery evidence](docs/screenshots/02_delivery_evidence.svg) | ![RailFlow model evidence](docs/screenshots/03_model_evidence.svg) |
+
 ## Architecture
 
 ```mermaid
