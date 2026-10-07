@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06111f"/><stop offset=".6" stop-color="#111936"/><stop offset="1" stop-color="#231044"/></linearGradient><linearGradient id="a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset=".45" stop-color="#3b82f6"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
+<rect width="1600" height="900" rx="30" fill="url(#bg)"/>
+<text x="80" y="88" fill="#c4b5fd" font-family="Segoe UI,Arial" font-size="24" font-weight="900" letter-spacing="2">RAILFLOW • MODEL EVIDENCE</text>
+<text x="80" y="145" fill="#fff" font-family="Segoe UI,Arial" font-size="48" font-weight="850">Station interchange-volume estimation</text>
+<rect x="80" y="172" width="1440" height="5" rx="3" fill="url(#a)"/>
+<text x="80" y="220" fill="#94a3b8" font-family="Segoe UI,Arial" font-size="18">Cross-sectional engineering baseline using ORR 2024-25 station usage data</text>
+
+<g font-family="Segoe UI,Arial">
+<rect x="80" y="285" width="660" height="430" rx="28" fill="#0b172a" stroke="#3b82f6" stroke-opacity=".35"/>
+<text x="120" y="340" fill="#60a5fa" font-size="19" font-weight="900">CHAMPION MODEL</text>
+<text x="120" y="402" fill="#fff" font-size="45" font-weight="850">Random Forest Regressor</text>
+<text x="120" y="465" fill="#cbd5e1" font-size="18">Selected against:</text>
+<text x="120" y="505" fill="#fff" font-size="19">• Median Dummy Regressor</text>
+<text x="120" y="542" fill="#fff" font-size="19">• Histogram Gradient Boosting Regressor</text>
+<text x="120" y="610" fill="#94a3b8" font-size="17">Registered model</text>
+<text x="120" y="645" fill="#fff" font-size="20" font-weight="700">railflow_station_interchange_regressor</text>
+<text x="120" y="680" fill="#a5b4fc" font-size="17">version 1 • alias: champion</text>
+
+<rect x="800" y="285" width="720" height="430" rx="28" fill="#12162f" stroke="#8b5cf6" stroke-opacity=".38"/>
+<text x="850" y="340" fill="#c4b5fd" font-size="19" font-weight="900">LOCKED EVALUATION RESULTS</text>
+<text x="850" y="420" fill="#fff" font-size="24" font-weight="800">RMSLE</text><text x="1420" y="420" text-anchor="end" fill="#67e8f9" font-size="34" font-weight="850">3.2095</text>
+<text x="850" y="490" fill="#fff" font-size="24" font-weight="800">MAE</text><text x="1420" y="490" text-anchor="end" fill="#93c5fd" font-size="34" font-weight="850">94,668.74</text>
+<text x="850" y="560" fill="#fff" font-size="24" font-weight="800">R²</text><text x="1420" y="560" text-anchor="end" fill="#c4b5fd" font-size="34" font-weight="850">0.2747</text>
+<text x="850" y="630" fill="#fff" font-size="24" font-weight="800">Baseline RMSLE</text><text x="1420" y="630" text-anchor="end" fill="#f9a8d4" font-size="34" font-weight="850">5.0534</text>
+</g>
+
+<rect x="80" y="755" width="1440" height="90" rx="22" fill="#0f2b30" stroke="#22d3ee" stroke-opacity=".35"/>
+<text x="800" y="812" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial" font-size="28" font-weight="850">36.49% RMSLE improvement vs baseline</text>
+</svg>
