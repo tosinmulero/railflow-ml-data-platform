@@ -192,3 +192,5 @@ reports/ml/retraining_decision.json
 *.tfstate.*
 crash.log
 crash.*.log
+*.tfplan
+**/stage9c-plan.txt
