@@ -12,7 +12,7 @@
 <circle cx="1450" cy="90" r="260" fill="#22d3ee" opacity=".07"/>
 <circle cx="120" cy="820" r="280" fill="#8b5cf6" opacity=".09"/>
 <text x="80" y="88" fill="#67e8f9" font-family="Segoe UI,Arial" font-size="24" font-weight="800" letter-spacing="2">RAILFLOW ML DATA PLATFORM</text>
-<text x="80" y="142" fill="#fff" font-family="Segoe UI,Arial" font-size="46" font-weight="800">Production-style data, ML & cloud architecture</text>
+<text x="80" y="142" fill="#fff" font-family="Segoe UI,Arial" font-size="46" font-weight="800">Production-style data, ML &amp; cloud architecture</text>
 <rect x="80" y="168" width="1440" height="5" rx="3" fill="url(#accent)"/>
 
 <g font-family="Segoe UI,Arial" text-anchor="middle" filter="url(#shadow)">
