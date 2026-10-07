@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07111f"/><stop offset=".55" stop-color="#111a35"/><stop offset="1" stop-color="#32134f"/></linearGradient>
+<linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset=".35" stop-color="#3b82f6"/><stop offset=".7" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+</defs>
+<rect width="1600" height="900" rx="30" fill="url(#bg)"/>
+<text x="80" y="88" fill="#fbbf24" font-family="Segoe UI,Arial" font-size="24" font-weight="900" letter-spacing="2">RAILFLOW • VERIFIED DELIVERY EVIDENCE</text>
+<text x="80" y="145" fill="#fff" font-family="Segoe UI,Arial" font-size="48" font-weight="850">From raw rail data to AWS deployment</text>
+<rect x="80" y="172" width="1440" height="5" rx="3" fill="url(#bar)"/>
+
+<g font-family="Segoe UI,Arial">
+<g transform="translate(80,235)"><rect width="330" height="180" rx="24" fill="#0c2535" stroke="#22d3ee" stroke-opacity=".45"/><text x="28" y="50" fill="#67e8f9" font-size="18" font-weight="800">DATA QUALITY</text><text x="28" y="105" fill="#fff" font-size="42" font-weight="850">2,593</text><text x="28" y="140" fill="#cbd5e1" font-size="17">validated Silver / Gold records</text></g>
+<g transform="translate(450,235)"><rect width="330" height="180" rx="24" fill="#112445" stroke="#3b82f6" stroke-opacity=".48"/><text x="28" y="50" fill="#93c5fd" font-size="18" font-weight="800">ANALYTICS ENGINEERING</text><text x="28" y="105" fill="#fff" font-size="42" font-weight="850">29 PASS</text><text x="28" y="140" fill="#cbd5e1" font-size="17">dbt build • 0 errors</text></g>
+<g transform="translate(820,235)"><rect width="330" height="180" rx="24" fill="#211d4d" stroke="#8b5cf6" stroke-opacity=".5"/><text x="28" y="50" fill="#c4b5fd" font-size="18" font-weight="800">AUTOMATED QUALITY</text><text x="28" y="105" fill="#fff" font-size="42" font-weight="850">38</text><text x="28" y="140" fill="#cbd5e1" font-size="17">pytest checks passed</text></g>
+<g transform="translate(1190,235)"><rect width="330" height="180" rx="24" fill="#3a2712" stroke="#f59e0b" stroke-opacity=".5"/><text x="28" y="50" fill="#fcd34d" font-size="18" font-weight="800">INFRASTRUCTURE AS CODE</text><text x="28" y="105" fill="#fff" font-size="42" font-weight="850">25</text><text x="28" y="140" fill="#cbd5e1" font-size="17">Terraform-managed AWS resources</text></g>
+
+<g transform="translate(80,455)"><rect width="440" height="200" rx="24" fill="#14243d" stroke="#38bdf8" stroke-opacity=".42"/><text x="30" y="52" fill="#7dd3fc" font-size="18" font-weight="800">MACHINE LEARNING</text><text x="30" y="112" fill="#fff" font-size="44" font-weight="850">36.49%</text><text x="30" y="150" fill="#cbd5e1" font-size="17">RMSLE improvement vs baseline</text></g>
+<g transform="translate(580,455)"><rect width="440" height="200" rx="24" fill="#102e2a" stroke="#10b981" stroke-opacity=".46"/><text x="30" y="52" fill="#6ee7b7" font-size="18" font-weight="800">AWS RUNTIME</text><text x="30" y="110" fill="#fff" font-size="37" font-weight="850">ECS / Fargate</text><text x="30" y="150" fill="#cbd5e1" font-size="17">service ACTIVE • desired 1 • running 1</text></g>
+<g transform="translate(1080,455)"><rect width="440" height="200" rx="24" fill="#2e203e" stroke="#ec4899" stroke-opacity=".42"/><text x="30" y="52" fill="#f9a8d4" font-size="18" font-weight="800">LIVE API VERIFICATION</text><text x="30" y="112" fill="#fff" font-size="44" font-weight="850">3 / 3 PASS</text><text x="30" y="150" fill="#cbd5e1" font-size="17">/health • /model • /predict</text></g>
+</g>
+
+<rect x="80" y="710" width="1440" height="105" rx="22" fill="#0b1425" stroke="#64748b" stroke-opacity=".25"/>
+<text x="115" y="753" fill="#fff" font-family="Segoe UI,Arial" font-size="20" font-weight="800">Security & delivery controls</text>
+<text x="115" y="789" fill="#cbd5e1" font-family="Segoe UI,Arial" font-size="17">GitHub OIDC • non-root container • ALB-restricted ECS ingress • immutable ECR images • model validation • Pydantic input contracts</text>
+<text x="80" y="858" fill="#94a3b8" font-family="Segoe UI,Arial" font-size="16">Portfolio deployment evidence • AWS eu-west-2 • ephemeral environment for cloud-cost control</text>
+</svg>
