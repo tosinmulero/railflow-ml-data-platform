@@ -7,6 +7,12 @@
 
 The project is designed as a production-style portfolio system, with emphasis on reproducibility, data quality, model governance, secure deployment and operational controls rather than model accuracy alone.
 
+## Recruiter quick review
+
+**[Read the dedicated portfolio case study](https://tosinmulero.github.io/data-analytics-portfolio/case-studies/railflow-ml-data-platform.html)** · **[Open the evidence guide](docs/RECRUITER_GUIDE.md)** · [View a project visual](docs/screenshots/01_platform_architecture.svg)
+
+The evidence guide links the business question, documented results, methodology and source artefacts without relying on unverified claims.
+
 ## Recruiter visual pack
 
 <p align="center">
